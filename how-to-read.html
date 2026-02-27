@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1a1a2e">
+    <meta name="description" content="How to Take HVAC Readings - دليل القياس">
+    <title>How to Read | طريقة القياس</title>
+    
+    <style>
+        :root {
+            --primary: #00d2ff;
+            --secondary: #3a7bd5;
+            --success: #00cc66;
+            --warning: #ffaa00;
+            --danger: #ff4d4d;
+            --bg: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --text: #ffffff;
+            --input-bg: #404040;
+            --border: #555;
+            --gold: #ffd700;
+        }
+
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 15px;
+            line-height: 1.6;
+        }
+
+        body[dir="rtl"] {
+            font-family: 'Tahoma', 'Arial', sans-serif;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            background: var(--card-bg);
+            padding: 1.2rem;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #444;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .header h1 {
+            font-size: 1.3rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            flex: 1;
+        }
+
+        .back-btn {
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        /* Language Toggle */
+        .lang-toggle {
+            background: var(--card-bg);
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #444;
+            text-align: center;
+        }
+
+        .lang-btn {
+            padding: 10px 20px;
+            margin: 0 5px;
+            border: 2px solid var(--border);
+            background: var(--input-bg);
+            color: #aaa;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .lang-btn.active {
+            border-color: var(--primary);
+            background: var(--secondary);
+            color: white;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            padding: 1.2rem;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #444;
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+        }
+
+        .card-title .icon {
+            font-size: 1.3rem;
+        }
+
+        /* Steps */
+        .step {
+            background: var(--input-bg);
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--secondary);
+            transition: 0.3s;
+        }
+
+        body[dir="rtl"] .step {
+            border-left: none;
+            border-right: 4px solid var(--secondary);
+        }
+
+        .step:hover {
+            transform: translateX(5px);
+            background: #4a4a5a;
+        }
+
+        body[dir="rtl"] .step:hover {
+            transform: translateX(-5px);
+        }
+
+        .step-number {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 28px;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+
+        body[dir="rtl"] .step-number {
+            margin-right: 0;
+            margin-left: 10px;
+        }
+
+        .step-text {
+            display: inline-block;
+            width: calc(100% - 45px);
+            vertical-align: top;
+            font-size: 0.9rem;
+        }
+
+        /* Warning Boxes */
+        .warning {
+            background: rgba(255, 77, 77, 0.15);
+            border: 1px solid var(--danger);
+            border-radius: 10px;
+            padding: 12px;
+            margin: 10px 0;
+            display: flex;
+            align-items: start;
+            gap: 10px;
+        }
+
+        .warning-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .warning-text {
+            font-size: 0.85rem;
+            color: #ffcccc;
+        }
+
+        .tip {
+            background: rgba(0, 204, 102, 0.15);
+            border: 1px solid var(--success);
+            border-radius: 10px;
+            padding: 12px;
+            margin: 10px 0;
+            display: flex;
+            align-items: start;
+            gap: 10px;
+        }
+
+        .tip-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .tip-text {
+            font-size: 0.85rem;
+            color: #ccffcc;
+        }
+
+        /* Pipe Diagram */
+        .pipe-diagram {
+            background: linear-gradient(145deg, #2a2a3a, #252535);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            text-align: center;
+            border: 2px solid var(--border);
+        }
+
+        .pipe-visual {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .pipe-box {
+            background: var(--input-bg);
+            padding: 15px;
+            border-radius: 10px;
+            min-width: 140px;
+            border: 2px solid;
+        }
+
+        .pipe-box.suction {
+            border-color: #00d2ff;
+        }
+
+        .pipe-box.liquid {
+            border-color: #ff6b6b;
+        }
+
+        .pipe-icon {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+        }
+
+        .pipe-label {
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .pipe-desc {
+            font-size: 0.8rem;
+            color: #aaa;
+        }
+
+        /* Tools Grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .tool-item {
+            background: var(--input-bg);
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .tool-icon {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .tool-name {
+            font-size: 0.8rem;
+            color: #ccc;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+            font-size: 0.8rem;
+        }
+
+        .developer-credit {
+            color: var(--gold);
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .header h1 { font-size: 1.1rem; }
+            .pipe-visual { flex-direction: column; }
+            .tools-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body dir="ltr">
+
+<div class="container">
+    <!-- Header -->
+    <div class="header">
+        <h1 id="pageTitle">📖 How to Take Readings</h1>
+        <a href="index.html" class="back-btn" id="backBtn" onclick="goBack(event)">← Back</a>
+    </div>
+
+    <!-- Language Toggle -->
+    <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLanguage('en')" id="enBtn">English</button>
+        <button class="lang-btn" onclick="setLanguage('ar')" id="arBtn">عراقي</button>
+    </div>
+
+    <!-- Tools Needed -->
+    <div class="card">
+        <div class="card-title">
+            <span class="icon">🧰</span>
+            <span id="toolsTitle">Tools You Need</span>
+        </div>
+        <div class="tools-grid">
+            <div class="tool-item">
+                <div class="tool-icon">📊</div>
+                <div class="tool-name" id="tool1">Manifold Gauge</div>
+            </div>
+            <div class="tool-item">
+                <div class="tool-icon">🌡️</div>
+                <div class="tool-name" id="tool2">Thermometer</div>
+            </div>
+            <div class="tool-item">
+                <div class="tool-icon">🧤</div>
+                <div class="tool-name" id="tool3">Safety Gloves</div>
+            </div>
+            <div class="tool-item">
+                <div class="tool-icon"></div>
+                <div class="tool-name" id="tool4">Safety Glasses</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pipe Identification -->
+    <div class="card">
+        <div class="card-title">
+            <span class="icon">🔧</span>
+            <span id="identifyTitle">Identify the Pipes</span>
+        </div>
+        
+        <div class="pipe-diagram">
+            <div class="pipe-visual">
+                <div class="pipe-box suction">
+                    <div class="pipe-icon">❄️</div>
+                    <div class="pipe-label" id="suctionLabel">Suction Line</div>
+                    <div class="pipe-desc" id="suctionDesc">Large pipe<br>Cold to touch<br>Low pressure</div>
+                </div>
+                <div class="pipe-box liquid">
+                    <div class="pipe-icon">🔥</div>
+                    <div class="pipe-label" id="liquidLabel">Liquid Line</div>
+                    <div class="pipe-desc" id="liquidDesc">Small pipe<br>Warm to touch<br>High pressure</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tip">
+            <span class="tip-icon">💡</span>
+            <span class="tip-text" id="pipeTip">The larger insulated pipe is always the suction line. The smaller copper pipe is the liquid line.</span>
+        </div>
+    </div>
+
+    <!-- Safety Warning -->
+    <div class="card">
+        <div class="card-title">
+            <span class="icon">⚠️</span>
+            <span id="safetyTitle">Safety First!</span>
+        </div>
+        
+        <div class="warning">
+            <span class="warning-icon">🛑</span>
+            <span class="warning-text" id="safety1">Always wear safety glasses and gloves when connecting gauges</span>
+        </div>
+        
+        <div class="warning">
+            <span class="warning-icon">🔌</span>
+            <span class="warning-text" id="safety2">Make sure the AC unit is RUNNING when taking readings</span>
+        </div>
+        
+        <div class="warning">
+            <span class="warning-icon">🌡️</span>
+            <span class="warning-text" id="safety3">Never touch hot pipes or compressor - they can burn you!</span>
+        </div>
+    </div>
+
+    <!-- Steps for Superheat -->
+    <div class="card">
+        <div class="card-title">
+            <span class="icon">🔥</span>
+            <span id="shTitle">How to Measure Superheat</span>
+        </div>
+
+        <div class="step">
+            <span class="step-number">1</span>
+            <span class="step-text" id="shStep1">Connect BLUE hose to suction line (large pipe) service port</span>
+        </div>
+
+        <div class="step">
+            <span class="step-number">2</span>
+            <span class="step-text" id="shStep2">Read the LOW pressure gauge (PSIG)</span>
+        </div>
+
+        <div class="step">
+            <span class="step-number">3</span>
+            <span class="step-text" id="shStep3">Use your thermometer to measure the temperature of the suction line</span>
+        </div>
+
+        <div class="step">
+            <span class="step-number">4</span>
+            <span class="step-text" id="shStep4">Enter both values in the calculator</span>
+        </div>
+
+        <div class="tip">
+            <span class="tip-icon">📍</span>
+            <span class="tip-text" id="shTip">Measure temperature 6 inches from the compressor on the suction line</span>
+        </div>
+    </div>
+
+    <!-- Steps for Subcooling -->
+    <div class="card">
+        <div class="card-title">
+            <span class="icon">💧</span>
+            <span id="scTitle">How to Measure Subcooling</span>
+        </div>
+
+        <div class="step">
+            <span class="step-number">1</span>
+            <span class="step-text" id="scStep1">Connect RED hose to liquid line (small pipe) service port</span>
+        </div>
+
+        <div class="step">
+            <span class="step-number">2</span>
+            <span class="step-text" id="scStep2">Read the HIGH pressure gauge (PSIG)</span>
+        </div>
+
+        <div class="step">
+            <span class="step-number">3</span>
+            <span class="step-text" id="scStep3">Use your thermometer to measure the temperature of the liquid line</span>
+        </div>
+
+        <div class="step">
+            <span class="step-number">4</span>
+            <span class="step-text" id="scStep4">Enter both values in the calculator (select Subcooling mode)</span>
+        </div>
+
+        <div class="tip">
+            <span class="tip-icon">📍</span>
+            <span class="tip-text" id="scTip">Measure temperature near the outdoor unit on the liquid line</span>
+        </div>
+    </div>
+
+    <!-- Iraqi Specific Tips -->
+    <div class="card">
+        <div class="card-title">
+            <span class="icon">🇮🇶</span>
+            <span id="iraqTitle">Iraqi Climate Tips</span>
+        </div>
+
+        <div class="tip">
+            <span class="tip-icon">☀️</span>
+            <span class="tip-text" id="iraqTip1">In Iraqi summer (45-50°C), pressures will be HIGHER than normal</span>
+        </div>
+
+        <div class="tip">
+            <span class="tip-icon">⏰</span>
+            <span class="tip-text" id="iraqTip2">Best time to check: Early morning or evening when it's cooler</span>
+        </div>
+
+        <div class="tip">
+            <span class="tip-icon">🌪️</span>
+            <span class="tip-text" id="iraqTip3">Dust storms can clog filters - always check airflow first!</span>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div id="footerText">Practice makes perfect! Stay safe out there.</div>
+        <div class="developer-credit" id="devCredit">Designed by Mohammed Hisham from Iraq 🇮</div>
+    </div>
+</div>
+
+<script>
+// Translations
+const translations = {
+    en: {
+        pageTitle: '📖 How to Take Readings',
+        backBtn: '← Back',
+        toolsTitle: '🧰 Tools You Need',
+        tool1: 'Manifold Gauge',
+        tool2: 'Thermometer',
+        tool3: 'Safety Gloves',
+        tool4: 'Safety Glasses',
+        identifyTitle: '🔧 Identify the Pipes',
+        suctionLabel: 'Suction Line',
+        suctionDesc: 'Large pipe<br>Cold to touch<br>Low pressure',
+        liquidLabel: 'Liquid Line',
+        liquidDesc: 'Small pipe<br>Warm to touch<br>High pressure',
+        pipeTip: 'The larger insulated pipe is always the suction line. The smaller copper pipe is the liquid line.',
+        safetyTitle: '⚠️ Safety First!',
+        safety1: 'Always wear safety glasses and gloves when connecting gauges',
+        safety2: 'Make sure the AC unit is RUNNING when taking readings',
+        safety3: 'Never touch hot pipes or compressor - they can burn you!',
+        shTitle: '🔥 How to Measure Superheat',
+        shStep1: 'Connect BLUE hose to suction line (large pipe) service port',
+        shStep2: 'Read the LOW pressure gauge (PSIG)',
+        shStep3: 'Use your thermometer to measure the temperature of the suction line',
+        shStep4: 'Enter both values in the calculator',
+        shTip: 'Measure temperature 6 inches from the compressor on the suction line',
+        scTitle: '💧 How to Measure Subcooling',
+        scStep1: 'Connect RED hose to liquid line (small pipe) service port',
+        scStep2: 'Read the HIGH pressure gauge (PSIG)',
+        scStep3: 'Use your thermometer to measure the temperature of the liquid line',
+        scStep4: 'Enter both values in the calculator (select Subcooling mode)',
+        scTip: 'Measure temperature near the outdoor unit on the liquid line',
+        iraqTitle: '🇮🇶 Iraqi Climate Tips',
+        iraqTip1: 'In Iraqi summer (45-50°C), pressures will be HIGHER than normal',
+        iraqTip2: 'Best time to check: Early morning or evening when it\'s cooler',
+        iraqTip3: 'Dust storms can clog filters - always check airflow first!',
+        footerText: 'Practice makes perfect! Stay safe out there.',
+        devCredit: 'Designed by Mohammed Hisham from Iraq 🇮'
+    },
+    ar: {
+        pageTitle: '📖 طريقة أخذ القراءات',
+        backBtn: '→ رجوع',
+        toolsTitle: '🧰 الأدوات المطلوبة',
+        tool1: 'ماني فولد',
+        tool2: 'ثيرمومتر',
+        tool3: 'كفوف أمان',
+        tool4: 'نظارة حماية',
+        identifyTitle: '🔧 عرف على الأنابيب',
+        suctionLabel: 'خط السحب',
+        suctionDesc: 'أنبوب كبير<br>بارد باللمس<br>ضغط واطئ',
+        liquidLabel: 'خط السائل',
+        liquidDesc: 'أنبوب صغير<br>دافي باللمس<br>ضغط عالي',
+        pipeTip: 'الأنبوب الكبير المعزول دائماً هو خط السحب. الأنبوب النحاسي الصغير هو خط السائل.',
+        safetyTitle: '⚠️ السلامة أولاً!',
+        safety1: 'دايماً ارتدي نظارة وكفوف أمان عند توصيل الماني فولد',
+        safety2: 'تأكد أن المكينة شغالة عند أخذ القراءات',
+        safety3: 'لا تلمس الأنابيب الحارة أو الكومبريسور - ممكن تحترق!',
+        shTitle: '🔥 كيف تقيس السوبرهيت',
+        shStep1: 'وصّل الخرطوم الأزرق ببورت خط السحب (الأنبوب الكبير)',
+        shStep2: 'اقرأ الضغط الواطي من الماني فولد (PSIG)',
+        shStep3: 'استخدم الثيرمومتر لقياس حرارة خط السحب',
+        shStep4: 'أدخل القيمتين بالحاسبة',
+        shTip: 'قيس الحرارة على بعد 6 إنش من الكومبريسور على خط السحب',
+        scTitle: '💧 كيف تقيس السب كولنج',
+        scStep1: 'وصّل الخرطوم الأحمر ببورت خط السائل (الأنبوب الصغير)',
+        scStep2: 'اقرأ الضغط العالي من الماني فولد (PSIG)',
+        shStep3: 'استخدم الثيرمومتر لقياس حرارة خط السائل',
+        scStep4: 'أدخل القيمتين بالحاسبة (اختار وضع السب كولنج)',
+        scTip: 'قيس الحرارة قرب المكينة الخارجية على خط السائل',
+        iraqTitle: '🇮🇶 نصايح للطقس العراقي',
+        iraqTip1: 'بالصيف العراقي (45-50 درجة)، الضغوط راح تكون أعلى من الطبيعي',
+        iraqTip2: 'أفضل وقت للفحص: الصبح الباكر أو المسوي لما يكون الجو أبرد',
+        iraqTip3: 'العواصف الترابية تسد الفلاتر - دائماً افحص تدفق الهواء أولاً!',
+        footerText: 'التدريب يخليك محترف! الله يحفظك بالشغل.',
+        devCredit: 'من تصميم محمد هشام من العراق 🇮🇶'
+    }
+};
+
+let currentLang = 'en';
+
+function setLanguage(lang) {
+    currentLang = lang;
+    const t = translations[lang];
+    
+    // Update buttons
+    document.getElementById('enBtn').classList.toggle('active', lang === 'en');
+    document.getElementById('arBtn').classList.toggle('active', lang === 'ar');
+    
+    // Set direction
+    document.body.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    document.documentElement.lang = lang;
+    
+    // Update all text
+    document.getElementById('pageTitle').textContent = t.pageTitle;
+    document.getElementById('backBtn').textContent = t.backBtn;
+    document.getElementById('toolsTitle').textContent = t.toolsTitle;
+    document.getElementById('tool1').textContent = t.tool1;
+    document.getElementById('tool2').textContent = t.tool2;
+    document.getElementById('tool3').textContent = t.tool3;
+    document.getElementById('tool4').textContent = t.tool4;
+    document.getElementById('identifyTitle').textContent = t.identifyTitle;
+    document.getElementById('suctionLabel').textContent = t.suctionLabel;
+    document.getElementById('suctionDesc').innerHTML = t.suctionDesc;
+    document.getElementById('liquidLabel').textContent = t.liquidLabel;
+    document.getElementById('liquidDesc').innerHTML = t.liquidDesc;
+    document.querySelector('.tip-text').textContent = t.pipeTip;
+    document.getElementById('safetyTitle').textContent = t.safetyTitle;
+    document.querySelectorAll('.warning-text')[0].textContent = t.safety1;
+    document.querySelectorAll('.warning-text')[1].textContent = t.safety2;
+    document.querySelectorAll('.warning-text')[2].textContent = t.safety3;
+    document.getElementById('shTitle').textContent = t.shTitle;
+    document.getElementById('shStep1').textContent = t.shStep1;
+    document.getElementById('shStep2').textContent = t.shStep2;
+    document.getElementById('shStep3').textContent = t.shStep3;
+    document.getElementById('shStep4').textContent = t.shStep4;
+    document.querySelectorAll('.tip-text')[1].textContent = t.shTip;
+    document.getElementById('scTitle').textContent = t.scTitle;
+    document.getElementById('scStep1').textContent = t.scStep1;
+    document.getElementById('scStep2').textContent = t.scStep2;
+    document.getElementById('scStep3').textContent = t.scStep3;
+    document.getElementById('scStep4').textContent = t.scStep4;
+    document.querySelectorAll('.tip-text')[2].textContent = t.scTip;
+    document.getElementById('iraqTitle').textContent = t.iraqTitle;
+    document.querySelectorAll('.tip-text')[3].textContent = t.iraqTip1;
+    document.querySelectorAll('.tip-text')[4].textContent = t.iraqTip2;
+    document.querySelectorAll('.tip-text')[5].textContent = t.iraqTip3;
+    document.getElementById('footerText').textContent = t.footerText;
+    document.getElementById('devCredit').textContent = t.devCredit;
+}
+
+// Go back to main page with language preserved
+function goBack(e) {
+    e.preventDefault(); // Stop default link behavior
+    
+    // Get current language
+    const lang = currentLang; // 'en' or 'ar'
+    
+    // Redirect to index.html with language parameter
+    window.location.href = `index.html?lang=${lang}`;
+}
+
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+    setLanguage('en');
+});
+</script>
+
+</body>
+</html>
